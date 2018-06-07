@@ -8,6 +8,6 @@ Inside the folder `RegistrationWeb` you can find the code for the website to rea
 
 Done with [NativeScript](https://github.com/nativescript/docs), and using the [firebase plugin](https://github.com/EddyVerbruggen/nativescript-plugin-firebase), that you must follow the steps in the plugin docs on how to access the server database with your own project data keys.
 
-To run it install [NativeScript](https://docs.nativescript.org/angular/start/quick-setup), a [emulator](https://docs.nativescript.org/tooling/android-virtual-devices), and run the project with `tns run android`
+To run it, install [NativeScript](https://docs.nativescript.org/angular/start/quick-setup), a [emulator](https://docs.nativescript.org/tooling/android-virtual-devices), and run the project with `tns run android`
 
 For problems check, [troubleshooting](https://docs.nativescript.org/start/troubleshooting)
