@@ -1,0 +1,12 @@
+.ng-valid[required] {
+    border-left-color: #42A948; 
+    border-left-width: 3;
+}
+.ng-invalid {
+    border-left-color: #a94442; 
+    border-left-width: 3;
+}
+.validation {
+    background-color: #a94442;
+    color: #ffffff;
+}

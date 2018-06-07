@@ -1,0 +1,65 @@
+<StackLayout class="form">
+    <ActionBar title="Guest check in data " class="action-bar"></ActionBar>
+    <ScrollView>
+        <StackLayout class="form">
+            <Label text="Name Hotel: {{nameHotel}}" class="label font-weight-bold m-b-5"></Label>
+            <Label text="Booking PMS: {{code}}" class="label font-weight-bold m-b-5"></Label>
+            <StackLayout class="input-field">
+                <Label text="Name" class="label font-weight-bold m-b-5"></Label>
+                <TextField #name="ngModel" [(ngModel)]="model.name" class="input" required minlength="3"></TextField>
+                <StackLayout class="hr-light"></StackLayout>
+            </StackLayout>
+            <StackLayout class="input-field">
+                <Label text="Email" class="label font-weight-bold m-b-5"></Label>
+                <TextField #email="ngModel" [(ngModel)]="model.email" class="input" required email></TextField>
+                <StackLayout class="hr-light"></StackLayout>
+            </StackLayout>
+            <StackLayout class="input-field">
+                <Label text="Address - Street and number" class="label font-weight-bold m-b-5"></Label>
+                <TextField #address1="ngModel" [(ngModel)]="model.address1" class="input"></TextField>
+                <StackLayout class="hr-light"></StackLayout>
+            </StackLayout>
+            <StackLayout class="input-field">
+                <Label text="Address - Postal code and city" class="label font-weight-bold m-b-5"></Label>
+                <TextField #address2="ngModel" [(ngModel)]="model.address2" class="input"></TextField>
+                <StackLayout class="hr-light"></StackLayout>
+            </StackLayout>
+            <StackLayout class="input-field">
+                <Label text="Date of birth" class="label font-weight-bold m-b-5"></Label>
+                <DatePicker (loaded)="onPickerLoaded($event)" verticalAlignment="center" [(ngModel)]="model.dateBirth"></DatePicker>
+                <StackLayout class="hr-light"></StackLayout>
+            </StackLayout>
+            <StackLayout class="input-field">
+                <Label text="Gender" class="label font-weight-bold m-b-5"></Label>
+                <DropDown [items]="genders" [(ngModel)]="model.sex" row="0" colSpan="2"></DropDown>
+                <StackLayout class="hr-light"></StackLayout>
+            </StackLayout>
+            <StackLayout class="input-field">
+                <Label text="Nationality" class="label font-weight-bold m-b-5"></Label>
+                <TextField #nationality="ngModel" [(ngModel)]="model.nationality" class="input"></TextField>
+                <StackLayout class="hr-light"></StackLayout>
+            </StackLayout>
+            <StackLayout class="input-field">
+                <Label text="Number of people" class="label font-weight-bold m-b-5"></Label>
+                <DropDown [items]="numOfPeople" [(ngModel)]="model.numberOfPeople" row="0" colSpan="2"></DropDown>
+                <StackLayout class="hr-light"></StackLayout>
+            </StackLayout>
+            <StackLayout class="input-field">
+                <StackLayout *ngIf="name.errors && (name.dirty || name.touched)">
+                    <Label *ngIf="name.errors.required" text="A name is required"></Label>
+                    <Label *ngIf="name.errors.minlength" text="Name must be longer than 3 characters"></Label>
+                </StackLayout>
+                <StackLayout *ngIf="email.errors && (email.dirty || email.touched)">
+                    <Label *ngIf="email.errors.required" text="An email is required"></Label>
+                    <Label *ngIf="email.errors.email" text="Email must be valid"></Label>
+                </StackLayout>
+            </StackLayout>
+            <StackLayout class="input-field">
+                <Button *ngIf="name.valid && email.valid" text="Save and take a pic" (tap)="save()" class="btn btn-primary"></Button>
+            </StackLayout>
+            <StackLayout class="input-field">
+                <Button text="Back" (tap)="back()" class="btn btn-default"></Button>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</StackLayout>

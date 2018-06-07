@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registration</title>
+    <!-- 
+    <script defer src="/__/firebase/5.0.2/firebase-auth.js"></script>
+    <script defer src="/__/firebase/5.0.2/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/5.0.2/firebase-storage.js"></script> 
+  <script defer src="/__/firebase/5.0.2/firebase-app.js"></script>
+  <script defer src="/__/firebase/5.0.2/firebase-database.js"></script>
+  <script defer src="/__/firebase/init.js"></script>-->
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
+
+</head>
+
+<body>
+
+    <button type="button" class="btn btn-primary" onclick="javascript:window.location='index.html'">PMSs</button>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+        crossorigin="anonymous"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/5.0.2/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+    var config = {
+      apiKey: "YOUR-KEY",
+      authDomain: "your-project.firebaseapp.com",
+      databaseURL: "https://your-project.firebaseio.com",
+      projectId: "your-project-id",
+      storageBucket: "your-project.appspot.com",
+      messagingSenderId: "your-sender-id"
+    };
+
+        firebase.initializeApp(config);
+        var storage = firebase.storage();
+        var storageRef = storage.ref();
+
+        function deleteMe(id, code) {
+            var tangRefS = storageRef.child(code + "/selfie.jpg");
+            tangRefS.delete();
+            var tangRefP = storageRef.child(code + "/passport.jpg");
+            tangRefP.delete();
+            var updates = {};
+            updates['/checkins/' + id] = null;
+            return firebase.database().ref().update(updates);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var bookings = firebase.database().ref('checkins');
+            bookings.on('value', function (snapshot) {
+                const checkins = snapshot.val();
+                var elementExists = document.getElementsByTagName("table");
+                if (elementExists && elementExists.length > 0)
+                    document.body.removeChild(elementExists[0])
+
+                var list = document.createElement("table");
+                list.className = "table";
+                var thead = document.createElement("thead");
+                thead.className = "thead-dark";
+                var trh = document.createElement("tr");
+                var th = document.createElement("th");
+                th.innerHTML = 'Code';
+                trh.appendChild(th);
+                var th = document.createElement("th");
+                th.innerHTML = 'Name Hotel';
+                trh.appendChild(th);
+                var th = document.createElement("th");
+                th.innerHTML = 'Name';
+                trh.appendChild(th);
+                var th = document.createElement("th");
+                th.innerHTML = 'Email';
+                trh.appendChild(th);
+                var th = document.createElement("th");
+                th.innerHTML = 'Date Birth';
+                trh.appendChild(th);
+                var th = document.createElement("th");
+                th.innerHTML = 'Address 1';
+                trh.appendChild(th);
+                var th = document.createElement("th");
+                th.innerHTML = 'Address 2';
+                trh.appendChild(th);
+                var th = document.createElement("th");
+                th.innerHTML = 'Nationality';
+                trh.appendChild(th);
+                var th = document.createElement("th");
+                th.innerHTML = 'Sex';
+                trh.appendChild(th);
+                var th = document.createElement("th");
+                th.innerHTML = 'Number of people';
+                trh.appendChild(th);
+                var th = document.createElement("th");
+                th.innerHTML = 'Delete';
+                trh.appendChild(th);
+                var th = document.createElement("th");
+                th.innerHTML = 'Selfie';
+                trh.appendChild(th);
+                var th = document.createElement("th");
+                th.innerHTML = 'Passport';
+                trh.appendChild(th);
+                thead.appendChild(trh);
+                list.appendChild(thead);
+                for (let i in checkins) {
+                    var tbody = document.createElement("tbody");
+                    var tr = document.createElement("tr");
+                    var td = document.createElement("td");
+                    td.innerText = checkins[i].code;
+                    tr.appendChild(td);
+
+                    var td = document.createElement("td");
+                    td.innerText = checkins[i].nameHotel;
+                    tr.appendChild(td);
+
+                    var td = document.createElement("td");
+                    td.innerText = checkins[i].name;
+                    tr.appendChild(td);
+
+                    var td = document.createElement("td");
+                    td.innerText = checkins[i].email;
+                    tr.appendChild(td);
+
+                    var td = document.createElement("td");
+                    td.innerText = checkins[i].dateBirth;
+                    tr.appendChild(td);
+
+                    var td = document.createElement("td");
+                    td.innerText = checkins[i].address1;
+                    tr.appendChild(td);
+
+                    var td = document.createElement("td");
+                    td.innerText = checkins[i].address2;
+                    tr.appendChild(td);
+
+                    var td = document.createElement("td");
+                    td.innerText = checkins[i].nationality;
+                    tr.appendChild(td);
+
+                    var td = document.createElement("td");
+                    if (checkins[i].sex === 0)
+                        td.innerText = "Male";
+                    else
+                        td.innerText = "Female";
+                    tr.appendChild(td);
+
+                    var td = document.createElement("td");
+                    td.innerText = checkins[i].numberOfPeople;
+                    tr.appendChild(td);
+
+                    var td = document.createElement("td");
+                    var button = document.createElement('button');
+                    button.innerHTML = 'delete me';
+                    button.setAttribute("onClick", `deleteMe('${i}','${checkins[i].code}')`);
+                    td.appendChild(button);
+                    tr.appendChild(td);
+
+                    var td = document.createElement("td");
+                    var imgS = document.createElement("img");
+                    imgS.width = 200;
+                    imgS.height = 200;
+                    imgS.className = i + "Selfie";
+                    var tangRefS = storageRef.child(checkins[i].code + '/selfie.jpg');
+                    tangRefS.getDownloadURL().then(function (url) {
+                        document.getElementsByClassName(i + "Selfie")[0].src = url;
+                    });
+                    td.appendChild(imgS);
+                    tr.appendChild(td);
+
+                    var td = document.createElement("td");
+                    var imgP = document.createElement("img");
+                    imgP.width = 200;
+                    imgP.height = 200;
+                    imgP.className = i + "Passport";
+                    var tangRefP = storageRef.child(checkins[i].code + '/passport.jpg');
+                    tangRefP.getDownloadURL().then(function (url) {
+                        document.getElementsByClassName(i + "Passport")[0].src = url;
+                    });
+                    td.appendChild(imgP);
+                    tr.appendChild(td);
+
+                    tbody.appendChild(tr);
+                    list.appendChild(tbody);
+                }
+                document.body.appendChild(list);
+            });
+        });
+    </script>
+</body>
+
+</html>
